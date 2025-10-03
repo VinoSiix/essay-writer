@@ -1,0 +1,488 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "chatId": "YOUR CHAT ID",
+        "text": "=https://docs.google.com/document/d/{{ $('Create a document').item.json.id }}/edit?tab=t.0",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2144,
+        -1552
+      ],
+      "id": "91fe1f2e-7455-49b0-a45e-0cae858de6c7",
+      "name": "Send a text message",
+      "webhookId": "f91c91c8-c666-4e8e-a6b8-a7110eef0049",
+      "credentials": {
+        "telegramApi": {
+          "id": "UfpmxTUIz33kQG2P",
+          "name": "Telegram account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "move",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Create a document').item.json.id }}",
+          "mode": "id"
+        },
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "=123",
+          "mode": "url"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1920,
+        -1552
+      ],
+      "id": "25ff7dfb-2bc3-4fef-804e-37f02de98840",
+      "name": "Move file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "yPLKu5NUiis2hRgx",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "12345678"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        -1344
+      ],
+      "id": "a6a89e9e-05ad-4f8b-956b-8d5c7661c16a",
+      "name": "Climate change",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7n6IM4HnHs2onX32",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "folderId": "default",
+        "title": "={{ $('Telegram').item.json.message.text }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1488,
+        -1552
+      ],
+      "id": "af7b7334-3b90-456a-a004-246f701a69c1",
+      "name": "Create a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7n6IM4HnHs2onX32",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ $('AI').item.json.output }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1696,
+        -1552
+      ],
+      "id": "fcca087b-c2a7-4032-ad9d-6affb9c910d2",
+      "name": "Update a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7n6IM4HnHs2onX32",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatCohere",
+      "typeVersion": 1,
+      "position": [
+        976,
+        -1344
+      ],
+      "id": "6eeea7ce-287d-458c-9887-6ea1ed198b39",
+      "name": "Cohere Chat Model19",
+      "credentials": {
+        "cohereApi": {
+          "id": "jTE4Ol2PZmA1cbQ5",
+          "name": "CohereApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        912,
+        -1552
+      ],
+      "id": "e8c6e3bf-1281-4801-ab71-355bb78ea003",
+      "name": "Telegram",
+      "webhookId": "4fea25ec-2fa4-46e4-ac84-ab2482d334d7",
+      "credentials": {
+        "telegramApi": {
+          "id": "UfpmxTUIz33kQG2P",
+          "name": "Telegram account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=read all the docs documents and write a new docs essay about {{ $json.chatInput }}{{ $json.message.text }} using the same style of language dont just repeat topics",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1152,
+        -1552
+      ],
+      "id": "6628b00e-09cd-49c5-968a-261986ff2657",
+      "name": "AI"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "12345678"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        1232,
+        -1344
+      ],
+      "id": "c37aba3e-d259-45aa-a3a7-1c053abc73b4",
+      "name": "Get a document in Google Docs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7n6IM4HnHs2onX32",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "12345678"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        -1200
+      ],
+      "id": "c252dfeb-f527-4f29-af03-2eeee94554b8",
+      "name": "Climate change2",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7n6IM4HnHs2onX32",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "12345678"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        1232,
+        -1200
+      ],
+      "id": "6b9e0491-49e3-4bc8-ad15-d0d0726192e3",
+      "name": "Get a document in Google Docs1",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7n6IM4HnHs2onX32",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "12345678"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        -1344
+      ],
+      "id": "7585e430-b73b-4dc9-be88-d70ac43f484f",
+      "name": "Climate change3",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7n6IM4HnHs2onX32",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "12345678"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        1488,
+        -1344
+      ],
+      "id": "47e88ab9-337f-4e51-92b3-91e03720a40e",
+      "name": "Get a document in Google Docs2",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7n6IM4HnHs2onX32",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "12345678"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        -1200
+      ],
+      "id": "8664fc94-c1f4-4e93-adce-1503e0c626ee",
+      "name": "Climate change4",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7n6IM4HnHs2onX32",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "12345678"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        1488,
+        -1200
+      ],
+      "id": "1a60ac32-7639-4ea4-bae7-61c67760a4ee",
+      "name": "Get a document in Google Docs3",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "7n6IM4HnHs2onX32",
+          "name": "Google Docs account 2"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Move file": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Climate change": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a document": {
+      "main": [
+        [
+          {
+            "node": "Update a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a document": {
+      "main": [
+        [
+          {
+            "node": "Move file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cohere Chat Model19": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI": {
+      "main": [
+        [
+          {
+            "node": "Create a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a document in Google Docs": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Climate change2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a document in Google Docs1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Climate change3": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a document in Google Docs2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Climate change4": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a document in Google Docs3": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1efc3d76fa127d96400db5c37840949eced8c5cc2b3f41157e7cce20e9669b79"
+  }
+}
